@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Throwable;
 
 class CustomerController extends Controller
 {
@@ -14,7 +15,11 @@ class CustomerController extends Controller
 
     private function fetchCustomers(): array
     {
-        $response = Http::acceptJson()->get($this->apiBase() . '/customers');
+        try {
+            $response = Http::acceptJson()->timeout(15)->retry(2, 250)->get($this->apiBase() . '/customers');
+        } catch (Throwable) {
+            return [];
+        }
 
         if (! $response->successful()) {
             return [];

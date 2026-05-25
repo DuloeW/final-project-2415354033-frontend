@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Throwable;
 
 class SubscriptionController extends Controller
 {
@@ -15,7 +16,11 @@ class SubscriptionController extends Controller
 
     private function fetchList(string $path): array
     {
-        $response = Http::acceptJson()->get($this->apiBase() . '/' . ltrim($path, '/'));
+        try {
+            $response = Http::acceptJson()->timeout(15)->retry(2, 250)->get($this->apiBase() . '/' . ltrim($path, '/'));
+        } catch (Throwable) {
+            return [];
+        }
 
         if (! $response->successful()) {
             return [];

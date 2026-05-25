@@ -101,32 +101,6 @@
         @foreach ($services as $index => $service)
             <div id="service-action-{{ $index }}" data-action-menu-panel data-open="false" class="fixed z-[100] hidden w-72 rounded-2xl border border-slate-200 bg-white p-3 shadow-[0_18px_40px_rgba(15,23,42,0.12)]" style="top: 0; left: 0;">
                 <div class="space-y-1">
-                    <form method="POST" action="{{ route('services.activate', data_get($service, 'id')) }}">
-                        @csrf
-                        @method('PATCH')
-                        <button type="submit" class="flex w-full items-center gap-4 rounded-xl px-4 py-3 text-[17px] font-medium text-slate-700 transition hover:bg-slate-100">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="shrink-0 text-slate-900">
-                                <path d="M4 12H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                <path d="M12 4V20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                <circle cx="12" cy="12" r="6" stroke="currentColor" stroke-width="2" opacity="0.9"/>
-                            </svg>
-                            <span>Active</span>
-                        </button>
-                    </form>
-
-                    <form method="POST" action="{{ route('services.deactivate', data_get($service, 'id')) }}">
-                        @csrf
-                        @method('PATCH')
-                        <button type="submit" class="flex w-full items-center gap-4 rounded-xl px-4 py-3 text-[17px] font-medium text-slate-700 transition hover:bg-slate-100">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="shrink-0 text-slate-900">
-                                <path d="M4 12H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                <path d="M8.5 8.5L15.5 15.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                <path d="M15.5 8.5L8.5 15.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                            </svg>
-                            <span>Deactivate</span>
-                        </button>
-                    </form>
-
                     <a href="{{ route('services.index', ['edit' => data_get($service, 'id')]) }}" class="flex items-center gap-4 rounded-xl px-4 py-3 text-[17px] font-medium text-slate-700 transition hover:bg-slate-100">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="shrink-0 text-slate-900">
                             <path d="M4 20H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>

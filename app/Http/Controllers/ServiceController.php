@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Throwable;
 
 class ServiceController extends Controller
 {
@@ -14,7 +15,11 @@ class ServiceController extends Controller
 
     private function fetchServices(): array
     {
-        $response = Http::acceptJson()->get($this->apiBase() . '/services');
+        try {
+            $response = Http::acceptJson()->timeout(15)->retry(2, 250)->get($this->apiBase() . '/services');
+        } catch (Throwable) {
+            return [];
+        }
 
         if (! $response->successful()) {
             return [];
